@@ -1,0 +1,26 @@
+[
+  {
+    "model": "rbac.role",
+    "pk": 1,
+    "fields": {
+      "name": "Admin",
+      "description": "System Administrator with full access"
+    }
+  },
+  {
+    "model": "rbac.role",
+    "pk": 2,
+    "fields": {
+      "name": "Teacher",
+      "description": "Instructor role with teaching permissions"
+    }
+  },
+  {
+    "model": "rbac.role",
+    "pk": 3,
+    "fields": {
+      "name": "Student",
+      "description": "Student role with limited access"
+    }
+  }
+]

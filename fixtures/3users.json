@@ -1,0 +1,330 @@
+[
+  {
+      "model": "users.user",
+      "pk": 1,
+      "fields": {
+          "email": "admin@example.com",
+          "first_name": "Admin",
+          "last_name": "User",
+          "phone": "0000000000",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": true,
+          "is_active": true,
+          "role": 1
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 2,
+      "fields": {
+          "email": "teacher1@example.com",
+          "first_name": "John",
+          "last_name": "Doe",
+          "phone": "1234567890",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": true,
+          "is_active": true,
+          "role": 2
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 3,
+      "fields": {
+          "email": "teacher2@example.com",
+          "first_name": "Jane",
+          "last_name": "Smith",
+          "phone": "2345678901",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": true,
+          "is_active": true,
+          "role": 2
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 4,
+      "fields": {
+          "email": "teacher3@example.com",
+          "first_name": "Alice",
+          "last_name": "Johnson",
+          "phone": "3456789012",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": true,
+          "is_active": true,
+          "role": 2
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 5,
+      "fields": {
+          "email": "teacher4@example.com",
+          "first_name": "Bob",
+          "last_name": "Williams",
+          "phone": "4567890123",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": true,
+          "is_active": true,
+          "role": 2
+      }
+  },
+  {
+      "model": "users.teacher",
+      "pk": 1,
+      "fields": {
+          "user": 2
+      }
+  },
+  {
+      "model": "users.teacher",
+      "pk": 2,
+      "fields": {
+          "user": 3
+      }
+  },
+  {
+      "model": "users.teacher",
+      "pk": 3,
+      "fields": {
+          "user": 4
+      }
+  },
+  {
+      "model": "users.teacher",
+      "pk": 4,
+      "fields": {
+          "user": 5
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 6,
+      "fields": {
+          "email": "student1@example.com",
+          "first_name": "Charlie",
+          "last_name": "Brown",
+          "phone": "5678901234",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 7,
+      "fields": {
+          "email": "student2@example.com",
+          "first_name": "David",
+          "last_name": "Wilson",
+          "phone": "6789012345",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 8,
+      "fields": {
+          "email": "student3@example.com",
+          "first_name": "Emma",
+          "last_name": "Davis",
+          "phone": "7890123456",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 9,
+      "fields": {
+          "email": "student4@example.com",
+          "first_name": "Frank",
+          "last_name": "Miller",
+          "phone": "8901234567",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 10,
+      "fields": {
+          "email": "student5@example.com",
+          "first_name": "Grace",
+          "last_name": "Taylor",
+          "phone": "9012345678",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 11,
+      "fields": {
+          "email": "student6@example.com",
+          "first_name": "Henry",
+          "last_name": "Clark",
+          "phone": "0123456789",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 12,
+      "fields": {
+          "email": "student7@example.com",
+          "first_name": "Ivy",
+          "last_name": "Moore",
+          "phone": "1234567890",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 13,
+      "fields": {
+          "email": "student8@example.com",
+          "first_name": "Jack",
+          "last_name": "Anderson",
+          "phone": "2345678901",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 14,
+      "fields": {
+          "email": "student9@example.com",
+          "first_name": "Kate",
+          "last_name": "Thomas",
+          "phone": "3456789012",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.user",
+      "pk": 15,
+      "fields": {
+          "email": "student10@example.com",
+          "first_name": "Liam",
+          "last_name": "Jackson",
+          "phone": "4567890123",
+          "password": "pbkdf2_sha256$216000$hash$hashvalue",
+          "is_staff": false,
+          "is_active": true,
+          "role": 3
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 1,
+      "fields": {
+          "user": 6,
+          "semester": 1,
+          "batch": "Batch A"
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 2,
+      "fields": {
+          "user": 7,
+          "semester": 2,
+          "batch": "Batch A"
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 3,
+      "fields": {
+          "user": 8,
+          "semester": 3,
+          "batch": "Batch B"
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 4,
+      "fields": {
+          "user": 9,
+          "semester": 4,
+          "batch": "Batch B"
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 5,
+      "fields": {
+          "user": 10,
+          "semester": 5,
+          "batch": "Batch C"
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 6,
+      "fields": {
+          "user": 11,
+          "semester": 6,
+          "batch": "Batch C"
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 7,
+      "fields": {
+          "user": 12,
+          "semester": 7,
+          "batch": "Batch D"
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 8,
+      "fields": {
+          "user": 13,
+          "semester": 8,
+          "batch": "Batch D"
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 9,
+      "fields": {
+          "user": 14,
+          "semester": 9,
+          "batch": "Batch E"
+      }
+  },
+  {
+      "model": "users.student",
+      "pk": 10,
+      "fields": {
+          "user": 15,
+          "semester": 10,
+          "batch": "Batch E"
+      }
+  }
+]

@@ -1,0 +1,85 @@
+{% extends 'chat/base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto flex flex-col h-[80vh] bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="bg-blue-500 text-white p-4 flex items-center">
+        <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center mr-4">
+            {{ receiver.first_name|first|upper }}
+        </div>
+        <h2 class="text-xl font-semibold">{{ receiver.first_name }}</h2>
+    </div>
+
+    <div id="chat-messages" class="flex-grow overflow-y-auto p-4 space-y-3">
+        {% for message in messages %}
+            <div class="flex {% if message.sender == request.user %}justify-end{% else %}justify-start{% endif %}">
+                <div class="max-w-[70%] p-2 rounded-lg {% if message.sender == request.user %}bg-blue-500 text-white{% else %}bg-gray-200 text-black{% endif %}">
+                    {{ message.content }}
+                    <div class="text-xs mt-1 opacity-70 text-right">
+                        {{ message.created_at|date:"H:i" }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <form id="chat-form" class="bg-gray-100 p-4 flex">
+        <input
+            type="text"
+            id="message-input"
+            autocomplete="off"
+            placeholder="Type a message..."
+            class="flex-grow p-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+        <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 transition duration-200"
+        >
+            Send
+        </button>
+    </form>
+</div>
+
+<script>
+    const receiverId = "{{ receiver.id }}";
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + receiverId + '/'
+    );
+
+    const messageInput = document.getElementById('message-input');
+    const chatForm = document.getElementById('chat-form');
+    const chatMessages = document.getElementById('chat-messages');
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    chatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const message = messageInput.value.trim();
+        if (message) {
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInput.value = '';
+        }
+    });
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const messageDiv = document.createElement('div');
+
+        messageDiv.classList.add('flex');
+        messageDiv.classList.add(data.sender_id === {{ request.user.id }} ? 'justify-end' : 'justify-start');
+
+        messageDiv.innerHTML = `
+            <div class="max-w-[70%] p-2 rounded-lg ${data.sender_id === {{ request.user.id }} ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}">
+                ${data.message}
+                <div class="text-xs mt-1 opacity-70 text-right">
+                    ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                </div>
+            </div>
+        `;
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+</script>
+{% endblock %}

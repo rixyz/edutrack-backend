@@ -1,0 +1,317 @@
+[
+  {
+    "model": "academics.subject",
+    "pk": 1,
+    "fields": {
+      "name": "Fundamentals Of English Grammar",
+      "code": "EFG331",
+      "semester": 1
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 2,
+    "fields": {
+      "name": "Fundamental Concepts Of ICT",
+      "code": "CCT201",
+      "semester": 1
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 3,
+    "fields": {
+      "name": "Discrete Mathematics",
+      "code": "CDM300",
+      "semester": 1
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 4,
+    "fields": {
+      "name": "Computer Programming",
+      "code": "CCP203",
+      "semester": 1
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 5,
+    "fields": {
+      "name": "Introduction To Multimedia",
+      "code": "CMM404",
+      "semester": 1
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 6,
+    "fields": {
+      "name": "Human Computer Interaction",
+      "code": "CHC401",
+      "semester": 2
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 7,
+    "fields": {
+      "name": "Information Literacy And Research Skills",
+      "code": "UCS105",
+      "semester": 2
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 8,
+    "fields": {
+      "name": "Operating Systems",
+      "code": "COS305",
+      "semester": 2
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 9,
+    "fields": {
+      "name": "Object Oriented Programming",
+      "code": "CCP313",
+      "semester": 2
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 10,
+    "fields": {
+      "name": "Database System",
+      "code": "CDS300",
+      "semester": 2
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 11,
+    "fields": {
+      "name": "Information Systems Analysis Design",
+      "code": "CAD300",
+      "semester": 3
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 12,
+    "fields": {
+      "name": "Management Information System",
+      "code": "CIS307",
+      "semester": 3
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 13,
+    "fields": {
+      "name": "Knowledge Management",
+      "code": "CKM313",
+      "semester": 3
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 14,
+    "fields": {
+      "name": "Computer Security",
+      "code": "CCS200",
+      "semester": 3
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 15,
+    "fields": {
+      "name": "Computer Communication And Networking",
+      "code": "CCN413",
+      "semester": 3
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 16,
+    "fields": {
+      "name": "Ict Project Management",
+      "code": "CPM399",
+      "semester": 4
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 17,
+    "fields": {
+      "name": "Computer Ethics And Cyberlaw",
+      "code": "CEL210",
+      "semester": 4
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 18,
+    "fields": {
+      "name": "Requirements Engineering",
+      "code": "CRE400",
+      "semester": 4
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 19,
+    "fields": {
+      "name": "Software Engineering",
+      "code": "CSE300",
+      "semester": 4
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 20,
+    "fields": {
+      "name": "Advanced Programming In Java",
+      "code": "CPJ119",
+      "semester": 4
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 21,
+    "fields": {
+      "name": "Software Constructions",
+      "code": "CSC400",
+      "semester": 5
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 22,
+    "fields": {
+      "name": "Agile Software Development",
+      "code": "CAS400",
+      "semester": 5
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 23,
+    "fields": {
+      "name": "Software Testing",
+      "code": "CST401",
+      "semester": 5
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 24,
+    "fields": {
+      "name": "Usability Engineering",
+      "code": "CUE400",
+      "semester": 5
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 25,
+    "fields": {
+      "name": "Software Architecture And Design",
+      "code": "CSA400",
+      "semester": 5
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 26,
+    "fields": {
+      "name": "Software Quality Assurance",
+      "code": "CSQ400",
+      "semester": 6
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 27,
+    "fields": {
+      "name": "Software Engineering For Real Time Systems",
+      "code": "CSE400",
+      "semester": 6
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 28,
+    "fields": {
+      "name": "Software Integration And Improvement",
+      "code": "CS1400",
+      "semester": 6
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 29,
+    "fields": {
+      "name": "Critical Thinking And Problem Solving Skills",
+      "code": "FS1012",
+      "semester": 6
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 30,
+    "fields": {
+      "name": "Internet Security",
+      "code": "CIS300",
+      "semester": 6
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 31,
+    "fields": {
+      "name": "Web Economy",
+      "code": "CWE300",
+      "semester": 7
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 32,
+    "fields": {
+      "name": "Computer Forensics",
+      "code": "CCF201",
+      "semester": 7
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 33,
+    "fields": {
+      "name": "Academic Writing",
+      "code": "MPU3222",
+      "semester": 7
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 34,
+    "fields": {
+      "name": "The Internet And World Wide Web",
+      "code": "CIW306",
+      "semester": 7
+    }
+  },
+  {
+    "model": "academics.subject",
+    "pk": 35,
+    "fields": {
+      "name": "Project Proposal",
+      "code": "CPP400",
+      "semester": 7
+    }
+  }
+]

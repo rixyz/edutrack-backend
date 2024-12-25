@@ -1,0 +1,103 @@
+[
+  {
+    "model": "academics.course",
+    "pk": 1,
+    "fields": {
+      "subject": 1,
+      "type": "Core",
+      "title": "Advanced Grammar Techniques",
+      "description": "Deep dive into the intricacies of grammar and structure.",
+      "duration_minutes": 600,
+      "teacher": 1,
+      "created_at": "2024-01-01T10:00:00Z",
+      "updated_at": "2024-01-02T12:00:00Z"
+    }
+  },
+  {
+    "model": "academics.course",
+    "pk": 2,
+    "fields": {
+      "subject": 4,
+      "type": "Lab",
+      "title": "Introduction to Programming",
+      "description": "Learn the fundamentals of programming using Python.",
+      "duration_minutes": 900,
+      "teacher": 2,
+      "created_at": "2024-01-05T10:00:00Z",
+      "updated_at": "2024-01-06T12:00:00Z"
+    }
+  },
+  {
+    "model": "academics.course",
+    "pk": 3,
+    "fields": {
+      "subject": 9,
+      "type": "Core",
+      "title": "Object-Oriented Programming Concepts",
+      "description": "Explore advanced OOP concepts with practical examples.",
+      "duration_minutes": 720,
+      "teacher": 3,
+      "created_at": "2024-01-10T10:00:00Z",
+      "updated_at": "2024-01-11T12:00:00Z"
+    }
+  },
+  {
+    "model": "academics.course",
+    "pk": 4,
+    "fields": {
+      "subject": 17,
+      "type": "Elective",
+      "title": "Cybersecurity and Ethics",
+      "description": "Understand the ethical considerations in cybersecurity.",
+      "duration_minutes": 480,
+      "teacher": 4,
+      "created_at": "2024-01-15T10:00:00Z",
+      "updated_at": "2024-01-16T12:00:00Z"
+    }
+  },
+
+  {
+    "model": "academics.lesson",
+    "pk": 1,
+    "fields": {
+      "course": 1,
+      "title": "Introduction to Grammar",
+      "content": "Learn about sentence structure and common rules.",
+      "order": 1,
+      "duration_minutes": 60
+    }
+  },
+  {
+    "model": "academics.lesson",
+    "pk": 2,
+    "fields": {
+      "course": 1,
+      "title": "Punctuation Rules",
+      "content": "Master the art of punctuating sentences effectively.",
+      "order": 2,
+      "duration_minutes": 60
+    }
+  },
+  {
+    "model": "academics.lesson",
+    "pk": 3,
+    "fields": {
+      "course": 2,
+      "title": "Python Basics",
+      "content": "Learn about variables, data types, and operators in Python.",
+      "order": 1,
+      "duration_minutes": 60
+    }
+  },
+  {
+    "model": "academics.lesson",
+    "pk": 4,
+    "fields": {
+      "course": 2,
+      "title": "Control Structures",
+      "content": "Understand loops and conditional statements in Python.",
+      "order": 2,
+      "duration_minutes": 60
+    }
+  }
+]

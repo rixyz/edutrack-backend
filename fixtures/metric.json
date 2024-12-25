@@ -1,0 +1,110 @@
+[
+  {
+    "model": "evaluations.studentperformancemetrics",
+    "pk": 1,
+    "fields": {
+      "student": 1,
+      "subject": 1,
+      "attendance_rate": "92.50",
+      "assignment_completion_rate": "95.00",
+      "average_assignment_score": "88.75",
+      "mid_term_grade": "85.50"
+    }
+  },
+  {
+    "model": "evaluations.studentperformancemetrics",
+    "pk": 2,
+    "fields": {
+      "student": 1,
+      "subject": 2,
+      "attendance_rate": "88.75",
+      "assignment_completion_rate": "90.00",
+      "average_assignment_score": "82.50",
+      "mid_term_grade": "80.00"
+    }
+  },
+  {
+    "model": "evaluations.studentperformancemetrics",
+    "pk": 3,
+    "fields": {
+      "student": 1,
+      "subject": 3,
+      "attendance_rate": "95.00",
+      "assignment_completion_rate": "97.50",
+      "average_assignment_score": "91.25",
+      "mid_term_grade": "88.75"
+    }
+  },
+  {
+    "model": "evaluations.studentperformancemetrics",
+    "pk": 4,
+    "fields": {
+      "student": 2,
+      "subject": 1,
+      "attendance_rate": "97.50",
+      "assignment_completion_rate": "100.00",
+      "average_assignment_score": "95.00",
+      "mid_term_grade": "92.50"
+    }
+  },
+  {
+    "model": "evaluations.studentperformancemetrics",
+    "pk": 5,
+    "fields": {
+      "student": 2,
+      "subject": 2,
+      "attendance_rate": "93.75",
+      "assignment_completion_rate": "95.00",
+      "average_assignment_score": "88.75",
+      "mid_term_grade": "85.00"
+    }
+  },
+  {
+    "model": "evaluations.studentperformancemetrics",
+    "pk": 6,
+    "fields": {
+      "student": 2,
+      "subject": 3,
+      "attendance_rate": "91.25",
+      "assignment_completion_rate": "92.50",
+      "average_assignment_score": "87.50",
+      "mid_term_grade": "84.25"
+    }
+  },
+  {
+    "model": "evaluations.studentperformancemetrics",
+    "pk": 7,
+    "fields": {
+      "student": 3,
+      "subject": 1,
+      "attendance_rate": "85.00",
+      "assignment_completion_rate": "87.50",
+      "average_assignment_score": "78.75",
+      "mid_term_grade": "75.50"
+    }
+  },
+  {
+    "model": "evaluations.studentperformancemetrics",
+    "pk": 8,
+    "fields": {
+      "student": 3,
+      "subject": 2,
+      "attendance_rate": "88.75",
+      "assignment_completion_rate": "85.00",
+      "average_assignment_score": "82.50",
+      "mid_term_grade": "79.25"
+    }
+  },
+  {
+    "model": "evaluations.studentperformancemetrics",
+    "pk": 9,
+    "fields": {
+      "student": 3,
+      "subject": 3,
+      "attendance_rate": "90.00",
+      "assignment_completion_rate": "92.50",
+      "average_assignment_score": "85.75",
+      "mid_term_grade": "82.00"
+    }
+  }
+]
