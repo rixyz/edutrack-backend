@@ -36,11 +36,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 await self.close(code=4002)
                 return
 
-            # if int(self.sender_id) == int(self.receiver_id):
-            #     print("Sender and receiver cannot be the same")
-            #     await self.close(code=4003)
-            #     return
-
             self.room_name = (
                 f"chat_{min(int(self.sender_id), int(self.receiver_id))}"
                 f"_{max(int(self.sender_id), int(self.receiver_id))}"

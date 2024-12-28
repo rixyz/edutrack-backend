@@ -133,6 +133,19 @@ class AssignmentSubmissionSerializer(serializers.Serializer):
         instance.save()
         return instance
 
+    def validate_score(self, value):
+        if value is not None:
+            assignment = (
+                self.instance.assignment
+                if self.instance
+                else self.initial_data.get("assignment")
+            )
+            if value > assignment.max_score:
+                raise serializers.ValidationError(
+                    f"Score cannot exceed the maximum score of {assignment.max_score}"
+                )
+        return value
+
 
 class AssignmentSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
