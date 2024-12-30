@@ -25,7 +25,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from EduTrack.settings import FRONTEND_URL
+from EduTrack.settings import ADMIN_URL, FRONTEND_URL
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -38,7 +38,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path(ADMIN_URL, admin.site.urls),
     path("api/", include("chat.urls")),
     path("api/", include("evaluations.urls")),
     path("api/", include("academics.urls", namespace="academics")),

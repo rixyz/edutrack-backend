@@ -10,7 +10,7 @@ from academics.serializers import (
     CourseSerializer,
     LessonSerializer,
 )
-from EduTrack.permissions import CheckPermission
+from EduTrack.permissions import CheckPermission, ModulePermission
 
 
 class AssignmentStudentView(APIView):
@@ -27,9 +27,7 @@ class AssignmentStudentView(APIView):
         Determines permissions based on the request method.
         """
         if self.request.method == "GET":
-            self.required_permission = []
-        else:
-            self.required_permission = []
+            self.required_permission = [ModulePermission.ASSIGNMENT_VIEW]
         return super().get_permissions()
 
     def get_queryset(self, user):
@@ -76,9 +74,9 @@ class AssignmentTeacherView(APIView):
         Determines permissions based on the request method.
         """
         if self.request.method == "GET":
-            self.required_permission = []
+            self.required_permission = [ModulePermission.ASSIGNMENT_VIEW]
         else:
-            self.required_permission = []
+            self.required_permission = [ModulePermission.ASSIGNMENT_CREATE]
         return super().get_permissions()
 
     def get_queryset(self, user):
@@ -141,7 +139,11 @@ class AssignmentDetailView(APIView):
 
     def get_permissions(self):
         if self.request.method == "GET":
-            self.required_permission = []
+            self.required_permission = [ModulePermission.ASSIGNMENT_VIEW]
+        elif self.request.method == "PATCH":
+            self.required_permission = [ModulePermission.ASSIGNMENT_UPDATE]
+        elif self.request.method == "DELETE":
+            self.required_permission = [ModulePermission.ASSIGNMENT_DELETE]
         return super().get_permissions()
 
     def get_queryset(self, pk):
@@ -404,7 +406,7 @@ class CourseStudentView(APIView):
         Determines permissions based on the request method.
         """
         if self.request.method == "GET":
-            self.required_permission = []
+            self.required_permission = [ModulePermission.COURSE_VIEW]
         else:
             self.required_permission = []
         return super().get_permissions()
@@ -452,9 +454,9 @@ class CourseTeacherView(APIView):
         Determines permissions based on the request method.
         """
         if self.request.method == "GET":
-            self.required_permission = []
+            self.required_permission = [ModulePermission.COURSE_VIEW]
         else:
-            self.required_permission = []
+            self.required_permission = [ModulePermission.COURSE_CREATE]
         return super().get_permissions()
 
     def get_queryset(self, user):
@@ -515,7 +517,11 @@ class CourseDetailView(APIView):
 
     def get_permissions(self):
         if self.request.method == "GET":
-            self.required_permission = []
+            self.required_permission = [ModulePermission.COURSE_VIEW]
+        elif self.request.method == "PATCH":
+            self.required_permission = [ModulePermission.COURSE_UPDATE]
+        elif self.request.method == "DELETE":
+            self.required_permission = [ModulePermission.COURSE_DELETE]
         return super().get_permissions()
 
     def get_queryset(self, pk):
@@ -603,9 +609,9 @@ class LessonTeacherView(APIView):
         Determines permissions based on the request method.
         """
         if self.request.method == "GET":
-            self.required_permission = []
+            self.required_permission = [ModulePermission.COURSE_VIEW]
         else:
-            self.required_permission = []
+            self.required_permission = [ModulePermission.COURSE_CREATE]
         return super().get_permissions()
 
     @swagger_auto_schema(

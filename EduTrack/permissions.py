@@ -1,7 +1,5 @@
 from rest_framework.permissions import BasePermission
 
-from rbac.models import RolePermission
-
 
 class Modules:
     USER_MANAGEMENT = "USER_MANAGEMENT"
@@ -57,10 +55,7 @@ class CheckPermission(BasePermission):
             return False
 
         required_permissions = getattr(view, "required_permission", [])
-        role_permissions = RolePermission.objects.filter(role=user_role).values_list(
-            "permission__codename", flat=True
-        )
 
         return all(
-            permission in role_permissions for permission in required_permissions
+            permission in request.permissions for permission in required_permissions
         )
