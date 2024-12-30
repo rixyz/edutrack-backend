@@ -12,7 +12,7 @@ from users.serializers import (
     TeacherSerializer,
     UserSerializer,
 )
-from utils import mail_send
+from utils.mail_handler import mail_send
 
 # Create your views here.
 

@@ -12,6 +12,9 @@ class StudentPerformanceMetrics(models.Model):
     average_assignment_score = models.FloatField()
     mid_term_grade = models.FloatField(null=True)
 
+    def __str__(self):
+        return f"{self.student} - {self.subject}"
+
     class Meta:
         unique_together = ("student", "subject")
 

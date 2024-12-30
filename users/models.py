@@ -8,6 +8,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import models
 from django.forms import ValidationError
 
+from EduTrack import settings
 from rbac.models import Role
 
 
@@ -61,6 +62,7 @@ class User(AbstractUser):
         Role, on_delete=models.CASCADE, blank=True, null=True, related_name="role"
     )
     profile_picture = models.ImageField(
+        blank=True,
         upload_to=rename_profile_picture,
         default="profile_picture/default_profile.jpg",
         validators=[file_size],
@@ -85,7 +87,7 @@ class User(AbstractUser):
             utils.encoding.force_bytes(self.id)
         )
         token = PasswordResetTokenGenerator().make_token(self)
-        base_url = "http://localhost:5173"
+        base_url = settings.FRONTEND_URL
         reset_url = f"{base_url}/forget_password/{base64_encoded_id}/{token}"
         return reset_url
 

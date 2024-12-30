@@ -1,11 +1,17 @@
 from django.contrib import admin
+from unfold.admin import TabularInline
 
-from rbac.models import Module, ModulePermission, Permission, Role, RolePermission
+from rbac.models import Role, RolePermission
+from utils.admin_import_export import ImportExportBase
 
-# Register your models here.
 
-admin.site.register(Role)
-admin.site.register(Permission)
-admin.site.register(Module)
-admin.site.register(RolePermission)
-admin.site.register(ModulePermission)
+class RolePermissionInline(TabularInline):
+    """Inline admin for managing permissions in a role."""
+
+    model = RolePermission
+    extra = 1
+
+
+@admin.register(Role)
+class RoleAdmin(ImportExportBase):
+    inlines = [RolePermissionInline]
