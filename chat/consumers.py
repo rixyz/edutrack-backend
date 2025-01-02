@@ -8,6 +8,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 from chat.models import Messages
 from EduTrack import settings
+from EduTrack.utils import get_or_not_found
 from users.models import User
 
 
@@ -88,8 +89,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def save_message(self, content):
-        sender = User.objects.get(id=self.sender_id)
-        receiver = User.objects.get(id=self.receiver_id)
+        sender = get_or_not_found(User.objects.all(), id=self.sender_id)
+        receiver = get_or_not_found(User.objects.all(), id=self.receiver_id)
 
         test = Messages.save_message(sender=sender, receiver=receiver, content=content)
         return test.id

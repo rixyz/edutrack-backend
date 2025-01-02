@@ -358,7 +358,7 @@ def get_student_predictions_with_explanation(student_id: int) -> dict[str, Any]:
     except Student.DoesNotExist:
         return {
             "error": "Student not found",
-            "details": f"No student found with ID {student_id}",
+            "message": f"No student found with ID {student_id}",
         }
 
     predictor: GradePredictionSystem = GradePredictionSystem()

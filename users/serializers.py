@@ -5,6 +5,7 @@ from django.utils.encoding import smart_str
 from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
 
+from EduTrack.utils import get_or_not_found
 from users.models import Student, Teacher, User
 
 
@@ -18,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "first_name",
             "last_name",
+            "phone",
             "password",
             "profile_picture",
             "role_name",
@@ -69,7 +71,7 @@ class ResetPasswordSerializer(serializers.Serializer):
 
         try:
             user_id = smart_str(urlsafe_base64_decode(uid))
-            self.user = User.objects.get(id=user_id)
+            self.user = get_or_not_found(User.objects.all(), pk=user_id)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             raise serializers.ValidationError(
                 {"message": ["Link is expired or invalid."]}

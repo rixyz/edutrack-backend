@@ -2,7 +2,7 @@ import logging
 
 from django.http import HttpRequest, HttpResponse
 
-from EduTrack.utils import get_user_id
+from EduTrack.utils import get_or_not_found, get_user_id
 from rbac.models import RolePermission
 from users.models import User
 
@@ -27,7 +27,7 @@ class RolePermissionsMiddleware:
         try:
             token = auth_header.split()[-1]
             user_id = get_user_id(token)
-            user = User.objects.get(id=user_id)
+            user = get_or_not_found(User.objects.all(), pk=user_id)
 
             if user and user.role:
                 permissions = (

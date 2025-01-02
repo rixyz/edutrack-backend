@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from EduTrack.utils import get_or_not_found
 from users.models import Student, Teacher, User
 from users.serializers import (
     ResetPasswordSerializer,
@@ -161,69 +162,56 @@ class UserInfoView(APIView):
     def get(self, request, *args, **kwargs) -> Response:
         if request.user.is_anonymous:
             return Response(
-                {"error": "Unauthorized user"},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-        try:
-            if "pk" in kwargs:
-                user: User = User.objects.get(pk=kwargs.get("pk"))
-            else:
-                user: User = request.user
-
-            if user.is_teacher():
-                profile = user.teacher_profile
-                teacher = Teacher.objects.prefetch_related("subject__subject").get(
-                    id=profile.id
-                )
-
-                serializer = TeacherSerializer(teacher)
-                return Response(
-                    {
-                        "message": "Teacher details retrieved successfully",
-                        "data": serializer.data,
-                        "status": "data_retrieved",
-                    },
-                    status=status.HTTP_200_OK,
-                )
-
-            elif user.is_student():
-                profile = user.student_profile
-                student = Student.objects.get(id=profile.id)
-
-                serializer = StudentSerializer(student)
-                return Response(
-                    {
-                        "message": "Student details retrieved successfully",
-                        "data": serializer.data,
-                        "status": "data_retrieved",
-                    },
-                    status=status.HTTP_200_OK,
-                )
-            else:
-                serializer = UserSerializer(user)
-                return Response(
-                    {
-                        "message": "User details retrieved successfully",
-                        "data": serializer.data,
-                        "status": "data_retrieved",
-                    },
-                    status=status.HTTP_200_OK,
-                )
-        except Teacher.DoesNotExist:
-            return Response(
-                {"error": "Access denied. User is not a teacher"},
+                {
+                    "error": "Unauthorized user",
+                    "message": "User is anonymous",
+                },
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        except Student.DoesNotExist:
-            return Response(
-                {"error": "Access denied. User is not a student"},
-                status=status.HTTP_403_FORBIDDEN,
+        if "pk" in kwargs:
+            user: User = get_or_not_found(User.objects.all(), pk=kwargs.get("pk"))
+        else:
+            user: User = request.user
+
+        if user.is_teacher():
+            profile = user.teacher_profile
+            teacher = Teacher.objects.prefetch_related("subject__subject").get(
+                id=profile.id
             )
-        except User.DoesNotExist:
+
+            serializer = TeacherSerializer(teacher)
             return Response(
-                {"error": "Access denied. User not found"},
-                status=status.HTTP_403_FORBIDDEN,
+                {
+                    "message": "Teacher details retrieved successfully",
+                    "data": serializer.data,
+                    "status": "data_retrieved",
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        elif user.is_student():
+            profile = user.student_profile
+            student = get_or_not_found(Student.objects.all(), pk=profile.id)
+
+            serializer = StudentSerializer(student)
+            return Response(
+                {
+                    "message": "Student details retrieved successfully",
+                    "data": serializer.data,
+                    "status": "data_retrieved",
+                },
+                status=status.HTTP_200_OK,
+            )
+        else:
+            serializer = UserSerializer(user)
+            return Response(
+                {
+                    "message": "User details retrieved successfully",
+                    "data": serializer.data,
+                    "status": "data_retrieved",
+                },
+                status=status.HTTP_200_OK,
             )
 
 
@@ -232,7 +220,7 @@ class RequestPasswordResetView(APIView):
         email = request.data.get("email")
         if email:
             try:
-                user = User.objects.get(email=email)
+                user = get_or_not_found(User.objects.all(), email=email)
                 reset_url = user.get_password_reset_url()
                 mail_send(user.email, "Link to reset password", reset_url)
                 return Response(

@@ -11,6 +11,7 @@ from academics.serializers import (
     LessonSerializer,
 )
 from EduTrack.permissions import CheckPermission, ModulePermission
+from EduTrack.utils import get_or_not_found
 
 
 class AssignmentStudentView(APIView):
@@ -36,12 +37,18 @@ class AssignmentStudentView(APIView):
         ).select_related("subject", "created_by")
 
     @swagger_auto_schema(
-        tags=["Assignment"],
-        operation_description="Retrieve courses for the student's current semester",
-        operation_summary="Get student-specific courses",
+        tags=["Assignments"],
+        operation_summary="List student assignments",
+        operation_description="""
+            Retrieve all assignments for the student's current semester,
+            including their submissions.
+        """,
         responses={
-            200: CourseSerializer(many=True),
-            401: "Unauthorized - Authentication required",
+            200: {
+                "message": "Assignments retrieved successfully",
+                "data": serializer_class(many=True),
+                "status": "data_retrieved",
+            },
         },
     )
     def get(self, request):
@@ -63,7 +70,9 @@ class AssignmentStudentView(APIView):
 
 class AssignmentTeacherView(APIView):
     """
-    API view for teachers to retrieve their created assignments.
+    API endpoint for managing teacher assignments.
+    Provides functionality for teachers to create new assignments and retrieve
+    assignments they have created.
     """
 
     serializer_class = AssignmentSerializer
@@ -85,9 +94,16 @@ class AssignmentTeacherView(APIView):
         ).select_related("subject", "created_by")
 
     @swagger_auto_schema(
-        tags=["Assignment"],
-        operation_description="Get list of assignments created by the teacher",
-        responses={200: AssignmentSerializer(many=True)},
+        tags=["Assignments"],
+        operation_summary="List teacher assignments",
+        operation_description="Retrieve all assignments created by the authenticated teacher.",
+        responses={
+            200: {
+                "message": "Teacher assignments retrieved successfully",
+                "data": serializer_class(many=True),
+                "status": "data_retrieved",
+            }
+        },
     )
     def get(self, request):
         user = request.user
@@ -105,10 +121,17 @@ class AssignmentTeacherView(APIView):
         )
 
     @swagger_auto_schema(
-        tags=["Assignment"],
-        operation_description="Create a new assignment",
+        tags=["Assignments"],
+        operation_summary="Create assignment",
+        operation_description="Create a new assignment for a specific subject.",
         request_body=AssignmentSerializer,
-        responses={201: AssignmentSerializer(), 400: "Bad Request", 403: "Forbidden"},
+        responses={
+            201: {
+                "message": "Assignment created successfully",
+                "data": serializer_class(many=True),
+                "status": "created",
+            }
+        },
     )
     def post(self, request):
         """Create a new assignment"""
@@ -131,7 +154,8 @@ class AssignmentTeacherView(APIView):
 
 class AssignmentDetailView(APIView):
     """
-    API view for retrieving detailed information about a specific assignment.
+    API endpoint for managing individual assignments.
+    Provides functionality to retrieve, update, and delete specific assignments.
     """
 
     serializer_class = AssignmentSerializer
@@ -147,8 +171,20 @@ class AssignmentDetailView(APIView):
         return super().get_permissions()
 
     def get_queryset(self, pk):
-        return Assignment.objects.get(pk=pk)
+        return get_or_not_found(Assignment.objects.all(), pk=pk)
 
+    @swagger_auto_schema(
+        tags=["Assignments"],
+        operation_summary="Get assignment details",
+        operation_description="Retrieve details of a specific assignment.",
+        responses={
+            200: {
+                "message": "Assignment details retrieved successfully",
+                "data": serializer_class,
+                "status": "data_retrieved",
+            }
+        },
+    )
     def get(self, request, pk):
         """
         Retrieve details of a specific assignment.
@@ -166,7 +202,17 @@ class AssignmentDetailView(APIView):
         )
 
     @swagger_auto_schema(
-        tags=["Assignment"],
+        tags=["Assignments"],
+        operation_summary="Update assignment",
+        operation_description="Update details of a specific assignment.",
+        request_body=AssignmentSerializer,
+        responses={
+            200: {
+                "message": "Assignment updated successfully",
+                "data": serializer_class,
+                "status": "updated",
+            },
+        },
     )
     def patch(self, request, pk):
         """
@@ -193,7 +239,12 @@ class AssignmentDetailView(APIView):
         )
 
     @swagger_auto_schema(
-        tags=["Assignment"],
+        tags=["Assignments"],
+        operation_summary="Delete assignment",
+        operation_description="Delete a specific assignment.",
+        responses={
+            200: {"message": "Assignment deleted successfully", "status": "deleted"},
+        },
     )
     def delete(self, request, pk):
         """
@@ -218,6 +269,11 @@ class AssignmentDetailView(APIView):
 
 
 class SubmissionStudentSubmitView(APIView):
+    """
+    API endpoint for managing student assignment submissions.
+    Allows students to submit assignments and view their submissions.
+    """
+
     serializer_class = AssignmentSubmissionSerializer
     permission_classes = [CheckPermission]
 
@@ -237,9 +293,16 @@ class SubmissionStudentSubmitView(APIView):
         )
 
     @swagger_auto_schema(
-        tags=["Assignment Submission"],
-        operation_description="Get list of assignment submissions",
-        responses={200: AssignmentSubmissionSerializer(many=True)},
+        tags=["Assignment Submissions"],
+        operation_summary="List student submissions",
+        operation_description="Retrieve all submissions made by the authenticated student.",
+        responses={
+            200: {
+                "message": "Data retrieved successfully",
+                "data": serializer_class,
+                "status": "data_retrieved",
+            }
+        },
     )
     def get(self, request):
         """Get list of assignment submissions"""
@@ -256,13 +319,16 @@ class SubmissionStudentSubmitView(APIView):
         )
 
     @swagger_auto_schema(
-        tags=["Assignment Submission"],
-        operation_description="Create a new assignment submission",
+        tags=["Assignment Submissions"],
+        operation_summary="Submit assignment",
+        operation_description="Create a new submission for an assignment.",
         request_body=AssignmentSubmissionSerializer,
         responses={
-            201: AssignmentSubmissionSerializer(),
-            400: "Bad Request",
-            403: "Forbidden",
+            201: {
+                "message": "Assignment Submission created successfully",
+                "data": serializer_class,
+                "status": "created",
+            }
         },
     )
     def post(self, request):
@@ -284,27 +350,41 @@ class SubmissionStudentSubmitView(APIView):
 
 
 class SubmissionDetailView(APIView):
+    """
+    API endpoint for managing individual assignment submissions.
+    Allows students to view and delete their submissions, and teachers to view
+    all submissions for their assignments.
+    """
+
     serializer_class = AssignmentSubmissionSerializer
+    permission_classes = [CheckPermission]
 
     def get_permissions(self):
         """
         Determines permissions based on the request method.
         """
-        if self.request.method in ["GET", "DELETE"]:
-            self.permission_classes = []
+        if self.request.method == "GET":
+            self.required_permission = []
         else:
-            self.permission_classes = []
+            self.required_permission = []
         return super().get_permissions()
 
+    def get_queryset(self, pk):
+        return get_or_not_found(AssignmentSubmission.objects.all(), pk=pk)
+
     @swagger_auto_schema(
-        tags=["Assignment Submission"],
-        operation_description="Delete an assignment submission",
-        responses={204: "No Content", 403: "Forbidden", 404: "Not Found"},
+        tags=["Assignment Submissions"],
+        operation_summary="Delete submission",
+        operation_description="Delete a specific assignment submission.",
+        responses={
+            200: {
+                "message": "Assignment submission deleted successfully",
+                "status": "deleted",
+            }
+        },
     )
     def delete(self, request, pk):
-        """Delete an assignment submission"""
-        student = request.user.student_profile
-        submission = AssignmentSubmission.objects.get(pk=pk, student=student)
+        submission = self.get_queryset(pk)
 
         submission.delete()
         return Response(
@@ -312,11 +392,17 @@ class SubmissionDetailView(APIView):
                 "message": "Assignment submission deleted successfully.",
                 "status": "deleted",
             },
-            status=status.HTTP_204_NO_CONTENT,
+            status=status.HTTP_200_OK,
         )
 
 
 class SubmissionByAssignmentView(APIView):
+    """
+    API endpoint for retrieving submissions by assignment.
+
+    Allows teachers to view all submissions for a specific assignment.
+    """
+
     serializer_class = AssignmentSubmissionSerializer
     permission_classes = [CheckPermission]
 
@@ -336,18 +422,25 @@ class SubmissionByAssignmentView(APIView):
         ).select_related("assignment", "student")
 
     @swagger_auto_schema(
-        tags=["Assignment Submission"],
-        operation_description="Get list of assignment submission",
-        responses={200: AssignmentSubmissionSerializer(many=True)},
+        tags=["Assignment Submissions"],
+        operation_summary="List assignment submissions",
+        operation_description="Retrieve all submissions for a specific assignment.",
+        responses={
+            200: {
+                "message": "Submission retrieved successfully",
+                "data": serializer_class(many=True),
+                "status": "data_retrieved",
+            }
+        },
     )
     def get(self, request, pk):
         """Get list of assignment submission by assignment ID"""
-        assignment = Assignment.objects.get(pk=pk)
+        assignment = get_or_not_found(Assignment.objects.all(), pk=pk)
         assignment_submission = self.get_queryset(assignment)
         serializer = self.serializer_class(assignment_submission, many=True)
         return Response(
             {
-                "message": "Data retrieved successfully.",
+                "message": "Submission retrieved successfully.",
                 "data": serializer.data,
                 "status": "data_retrieved",
             },
@@ -356,6 +449,12 @@ class SubmissionByAssignmentView(APIView):
 
 
 class SubmissionGradeView(APIView):
+    """
+    API endpoint for grading assignment submissions.
+
+    Allows teachers to grade and provide feedback on student submissions.
+    """
+
     serializer_class = AssignmentSubmissionSerializer
     permission_classes = [CheckPermission]
 
@@ -370,13 +469,21 @@ class SubmissionGradeView(APIView):
         return super().get_permissions()
 
     @swagger_auto_schema(
-        tags=["Assignment Submission"],
-        operation_description="Grade assignment submission",
-        responses={200: AssignmentSubmissionSerializer(many=True)},
+        tags=["Assignment Submissions"],
+        operation_summary="Grade submission",
+        operation_description="Update grade and feedback for a submission.",
+        request_body=AssignmentSubmissionSerializer,
+        responses={
+            200: {
+                "message": "Assignment submission updated successfully",
+                "data": serializer_class,
+                "status": "updated",
+            },
+        },
     )
     def patch(self, request, pk):
         """Grade assignment submission by assignment submission ID"""
-        submission = AssignmentSubmission.objects.get(pk=pk)
+        submission = get_or_not_found(AssignmentSubmission.objects.all(), pk=pk)
         serializer = self.serializer_class(submission, data=request.data, partial=True)
 
         serializer.is_valid(raise_exception=True)
@@ -421,8 +528,11 @@ class CourseStudentView(APIView):
         operation_description="Retrieve courses for the student's current semester",
         operation_summary="Get student-specific courses",
         responses={
-            200: CourseSerializer(many=True),
-            401: "Unauthorized - Authentication required",
+            200: {
+                "message": "Course retrieved successfully",
+                "data": serializer_class(many=True),
+                "status": "data_retrieved",
+            },
         },
     )
     def get(self, request):
@@ -432,7 +542,7 @@ class CourseStudentView(APIView):
         serializer = self.serializer_class(courses, many=True)
         return Response(
             {
-                "message": "Data retrieved successfully",
+                "message": "Course retrieved successfully",
                 "data": serializer.data,
                 "status": "data_retrieved",
             },
@@ -446,8 +556,7 @@ class CourseTeacherView(APIView):
     """
 
     serializer_class = CourseSerializer
-
-    permission_classes = []
+    permission_classes = [CheckPermission]
 
     def get_permissions(self):
         """
@@ -465,9 +574,16 @@ class CourseTeacherView(APIView):
         )
 
     @swagger_auto_schema(
-        tags=["Course"],
-        operation_description="Get list of courses created by the teacher",
-        responses={200: CourseSerializer(many=True)},
+        tags=["Courses"],
+        operation_summary="List teacher courses",
+        operation_description="Retrieve all courses created by the teacher.",
+        responses={
+            200: {
+                "message": "Teacher courses retrieved successfully",
+                "data": serializer_class(many=True),
+                "status": "data_retrieved",
+            }
+        },
     )
     def get(self, request):
         user = request.user
@@ -483,14 +599,19 @@ class CourseTeacherView(APIView):
         )
 
     @swagger_auto_schema(
-        tags=["Course"],
-        operation_description="Create a new course",
+        tags=["Courses"],
+        operation_summary="Create course",
+        operation_description="Create a new course.",
         request_body=CourseSerializer,
-        responses={201: CourseSerializer(), 400: "Bad Request", 403: "Forbidden"},
+        responses={
+            201: {
+                "message": "Course created successfully",
+                "data": serializer_class,
+                "status": "created",
+            }
+        },
     )
     def post(self, request):
-        """Create a new course"""
-
         teacher = request.user.teacher_profile
         serializer = self.serializer_class(
             data=request.data, context={"teacher": teacher}
@@ -509,7 +630,8 @@ class CourseTeacherView(APIView):
 
 class CourseDetailView(APIView):
     """
-    API view for retrieving detailed information about a specific course.
+    API endpoint for managing individual courses.
+    Provides functionality to retrieve, update, and delete specific courses.
     """
 
     serializer_class = CourseSerializer
@@ -525,8 +647,20 @@ class CourseDetailView(APIView):
         return super().get_permissions()
 
     def get_queryset(self, pk):
-        return Course.objects.get(pk=pk)
+        return get_or_not_found(Course.objects.all(), pk=pk)
 
+    @swagger_auto_schema(
+        tags=["Courses"],
+        operation_summary="Get course details",
+        operation_description="Retrieve details of a specific course.",
+        responses={
+            200: {
+                "message": "Course details retrieved successfully",
+                "data": serializer_class,
+                "status": "data_retrieved",
+            },
+        },
+    )
     def get(self, request, pk):
         """
         Retrieve details of a specific course.
@@ -544,19 +678,19 @@ class CourseDetailView(APIView):
         )
 
     @swagger_auto_schema(
-        tags=["Course"],
+        tags=["Courses"],
+        operation_summary="Update course",
+        operation_description="Update details of a specific course.",
+        request_body=CourseSerializer,
+        responses={
+            200: {
+                "message": "Course updated successfully",
+                "data": serializer_class,
+                "status": "updated",
+            }
+        },
     )
     def patch(self, request, pk):
-        """
-        Update specific fields of an existing course.
-
-        Args:
-            request: HTTP request containing fields to update
-            pk (int): Primary key of the course to update
-
-        Returns:
-            Response: Updated course data with HTTP 200 OK status or appropriate error response
-        """
         course = self.get_queryset(pk)
         serializer = self.serializer_class(course, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -571,19 +705,14 @@ class CourseDetailView(APIView):
         )
 
     @swagger_auto_schema(
-        tags=["Course"],
+        tags=["Courses"],
+        operation_summary="Delete course",
+        operation_description="Delete a specific course.",
+        responses={
+            200: {"message": "Course deleted successfully", "status": "deleted"}
+        },
     )
     def delete(self, request, pk):
-        """
-        Delete a specific course.
-
-        Args:
-            request: HTTP request
-            pk (int): Primary key of the course to delete
-
-        Returns:
-            Response: Empty response with HTTP 204 NO CONTENT status or error response
-        """
         course = self.get_queryset(pk)
         course.delete()
         return Response(
@@ -597,12 +726,13 @@ class CourseDetailView(APIView):
 
 class LessonTeacherView(APIView):
     """
-    API view for teachers to retrieve their created lessons.
+    API endpoint for managing course lessons.
+    Allows teachers to create and manage lessons within their courses.
     """
 
     serializer_class = LessonSerializer
 
-    permission_classes = []
+    permission_classes = [CheckPermission]
 
     def get_permissions(self):
         """
@@ -615,10 +745,17 @@ class LessonTeacherView(APIView):
         return super().get_permissions()
 
     @swagger_auto_schema(
-        tags=["Lesson"],
-        operation_description="Create a new course",
-        request_body=CourseSerializer,
-        responses={201: CourseSerializer(), 400: "Bad Request", 403: "Forbidden"},
+        tags=["Lessons"],
+        operation_summary="Create lesson",
+        operation_description="Create a new lesson for a course.",
+        request_body=LessonSerializer,
+        responses={
+            201: {
+                "message": "Lesson created successfully",
+                "data": serializer_class,
+                "status": "created",
+            }
+        },
     )
     def post(self, request):
         """Create a new course"""

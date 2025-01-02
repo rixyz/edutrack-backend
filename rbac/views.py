@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from EduTrack.utils import get_or_not_found
 from rbac.serializers import RolePermissionSerializer, UserRoleSerializer
 from users.models import User
 
@@ -68,7 +69,7 @@ class AssignUserRoleView(APIView):
         Assign a role to a user.
         """
         user_id = request.data.get("id")
-        user = User.objects.get(id=user_id)
+        user = get_or_not_found(User.objects.all(), pk=user_id)
 
         serializer = self.serializer_class(user, data=request.data, partial=True)
 

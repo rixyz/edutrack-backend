@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 
 from academics.models import AssignmentSubmission, Subject
+from EduTrack.utils import get_or_not_found
 from evaluations.models import StudentPerformanceMetrics
 from users.models import Student, User
 
@@ -290,19 +291,21 @@ def get_subject_predictions(
 ) -> dict[str, Any]:
     """Get detailed subject-wise predictions for a student"""
     try:
-        user: User = User.objects.get(id=student_id)
+        user: User = get_or_not_found(User.objects.all(), pk=student_id)
         student: Student = Student.objects.get(user=user)
         predictor: SubjectScorePrediction = SubjectScorePrediction()
 
         if subject_id:
-            subject: Subject = Subject.objects.get(id=subject_id)
+            subject: Subject = get_or_not_found(Subject.objects.all(), pk=subject_id)
             analysis: dict[str, Any] | None = predictor.analyze_subject_performance(
                 student, subject
             )
             if analysis:
                 return {subject.name: analysis}
             else:
-                raise LookupError("No data available for the specified subject.")
+                raise LookupError(
+                    f"No data available of {user.get_full_name()} for the subject {subject.name}."
+                )
         else:
             subjects: Any = Subject.objects.filter(semester=student.semester)
             predictions: dict[str, Any] = {}
