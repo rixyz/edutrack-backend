@@ -1,302 +1,137 @@
 [
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 1,
-        "fields": {
-            "student": 1,
-            "subject": 1,
-            "semester": 1,
-            "gpa": 3.5
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 2,
-        "fields": {
-            "student": 1,
-            "subject": 2,
-            "semester": 1,
-            "gpa": 3.7
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 3,
-        "fields": {
-            "student": 1,
-            "subject": 3,
-            "semester": 1,
-            "gpa": 3.8
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 4,
-        "fields": {
-            "student": 1,
-            "subject": 4,
-            "semester": 1,
-            "gpa": 3.6
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 5,
-        "fields": {
-            "student": 1,
-            "subject": 5,
-            "semester": 1,
-            "gpa": 3.9
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 6,
-        "fields": {
-            "student": 1,
-            "subject": 1,
-            "semester": 2,
-            "gpa": 3.4
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 7,
-        "fields": {
-            "student": 1,
-            "subject": 2,
-            "semester": 2,
-            "gpa": 3.5
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 8,
-        "fields": {
-            "student": 1,
-            "subject": 3,
-            "semester": 2,
-            "gpa": 3.6
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 9,
-        "fields": {
-            "student": 1,
-            "subject": 4,
-            "semester": 2,
-            "gpa": 3.7
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 10,
-        "fields": {
-            "student": 1,
-            "subject": 5,
-            "semester": 2,
-            "gpa": 3.8
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 11,
-        "fields": {
-            "student": 2,
-            "subject": 1,
-            "semester": 1,
-            "gpa": 3.2
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 12,
-        "fields": {
-            "student": 2,
-            "subject": 2,
-            "semester": 1,
-            "gpa": 3.3
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 13,
-        "fields": {
-            "student": 2,
-            "subject": 3,
-            "semester": 1,
-            "gpa": 3.1
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 14,
-        "fields": {
-            "student": 2,
-            "subject": 4,
-            "semester": 1,
-            "gpa": 3.4
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 15,
-        "fields": {
-            "student": 2,
-            "subject": 5,
-            "semester": 1,
-            "gpa": 3.2
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 16,
-        "fields": {
-            "student": 2,
-            "subject": 1,
-            "semester": 2,
-            "gpa": 3.3
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 17,
-        "fields": {
-            "student": 2,
-            "subject": 2,
-            "semester": 2,
-            "gpa": 3.4
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 18,
-        "fields": {
-            "student": 2,
-            "subject": 3,
-            "semester": 2,
-            "gpa": 3.5
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 19,
-        "fields": {
-            "student": 2,
-            "subject": 4,
-            "semester": 2,
-            "gpa": 3.6
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 20,
-        "fields": {
-            "student": 2,
-            "subject": 5,
-            "semester": 2,
-            "gpa": 3.7
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 21,
-        "fields": {
-            "student": 3,
-            "subject": 1,
-            "semester": 1,
-            "gpa": 3.8
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 22,
-        "fields": {
-            "student": 3,
-            "subject": 2,
-            "semester": 1,
-            "gpa": 3.9
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 23,
-        "fields": {
-            "student": 3,
-            "subject": 3,
-            "semester": 1,
-            "gpa": 4.0
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 24,
-        "fields": {
-            "student": 3,
-            "subject": 4,
-            "semester": 1,
-            "gpa": 3.7
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 25,
-        "fields": {
-            "student": 3,
-            "subject": 5,
-            "semester": 1,
-            "gpa": 3.8
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 26,
-        "fields": {
-            "student": 3,
-            "subject": 1,
-            "semester": 2,
-            "gpa": 3.6
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 27,
-        "fields": {
-            "student": 3,
-            "subject": 2,
-            "semester": 2,
-            "gpa": 3.7
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 28,
-        "fields": {
-            "student": 3,
-            "subject": 3,
-            "semester": 2,
-            "gpa": 3.8
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 29,
-        "fields": {
-            "student": 3,
-            "subject": 4,
-            "semester": 2,
-            "gpa": 3.9
-        }
-    },
-    {
-        "model": "evaluations.StudentResult",
-        "pk": 30,
-        "fields": {
-            "student": 3,
-            "subject": 5,
-            "semester": 2,
-            "gpa": 4.0
-        }
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 1,
+    "fields": {
+      "student": 1,
+      "subject": 1,
+      "gpa": 3.5
     }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 2,
+    "fields": {
+      "student": 1,
+      "subject": 2,
+      "gpa": 3.7
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 3,
+    "fields": {
+      "student": 1,
+      "subject": 3,
+      "gpa": 3.8
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 4,
+    "fields": {
+      "student": 1,
+      "subject": 4,
+      "gpa": 3.6
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 5,
+    "fields": {
+      "student": 1,
+      "subject": 5,
+      "gpa": 3.9
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 11,
+    "fields": {
+      "student": 2,
+      "subject": 1,
+      "gpa": 3.2
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 12,
+    "fields": {
+      "student": 2,
+      "subject": 2,
+      "gpa": 3.3
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 13,
+    "fields": {
+      "student": 2,
+      "subject": 3,
+      "gpa": 3.1
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 14,
+    "fields": {
+      "student": 2,
+      "subject": 4,
+      "gpa": 3.4
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 15,
+    "fields": {
+      "student": 2,
+      "subject": 5,
+      "gpa": 3.2
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 21,
+    "fields": {
+      "student": 3,
+      "subject": 1,
+      "gpa": 3.8
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 22,
+    "fields": {
+      "student": 3,
+      "subject": 2,
+      "gpa": 3.9
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 23,
+    "fields": {
+      "student": 3,
+      "subject": 3,
+      "gpa": 4.0
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 24,
+    "fields": {
+      "student": 3,
+      "subject": 4,
+      "gpa": 3.7
+    }
+  },
+  {
+    "model": "evaluations.StudentResult",
+    "pk": 25,
+    "fields": {
+      "student": 3,
+      "subject": 5,
+      "gpa": 3.8
+    }
+  }
 ]

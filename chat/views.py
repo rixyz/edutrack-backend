@@ -1,16 +1,17 @@
 from django.db.models import Max, Q, Subquery
-from django.shortcuts import get_object_or_404
-from rest_framework import permissions, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from chat.models import Messages
 from chat.serializers import ChatListSerializer, MessageSerializer
+from EduTrack.permissions import CheckPermission
+from EduTrack.utils import get_or_not_found
 from users.models import User
 
 
 class ChatListAPIView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [CheckPermission]
 
     def get(self, request):
         user = request.user
@@ -58,10 +59,10 @@ class ChatListAPIView(APIView):
 
 
 class ChatRoomAPIView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [CheckPermission]
 
     def get(self, request, receiver_id):
-        receiver = get_object_or_404(User, id=receiver_id)
+        receiver = get_or_not_found(User.objects.all(), pk=receiver_id)
 
         messages = Messages.objects.filter(
             (Q(sender=request.user) & Q(receiver=receiver))
@@ -77,20 +78,3 @@ class ChatRoomAPIView(APIView):
             },
             status=status.HTTP_200_OK,
         )
-
-    # def post(self, request, receiver_id):
-    #     receiver = get_object_or_404(User, id=receiver_id)
-
-    #     serializer = MessageSerializer(data=request.data)
-
-    #     if serializer.is_valid():
-    #         new_message = Messages.objects.create(
-    #             sender=request.user,
-    #             receiver=receiver,
-    #             content=serializer.validated_data["content"],
-    #         )
-
-    #         response_serializer = MessageSerializer(new_message)
-    #         return Response(response_serializer.data, status=status.HTTP_201_CREATED)
-
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

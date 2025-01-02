@@ -5,7 +5,7 @@ from import_export.widgets import ForeignKeyWidget
 from unfold.admin import ModelAdmin
 
 from academics.models import Subject
-from evaluations.models import StudentPerformanceMetrics
+from evaluations.models import StudentPerformanceMetrics, StudentResult
 from users.models import Student
 
 
@@ -63,3 +63,11 @@ class StudentPerformanceMetricsAdmin(ImportExportMixin, ModelAdmin):
     ]
 
     ordering = ["student__semester", "subject__code"]
+
+
+@admin.register(StudentResult)
+class StudentResultAdmin(ImportExportMixin, ModelAdmin):
+    list_display = [
+        "student",
+        "subject",
+    ]

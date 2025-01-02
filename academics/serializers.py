@@ -2,6 +2,7 @@ from bleach import ALLOWED_ATTRIBUTES, ALLOWED_TAGS, clean
 from rest_framework import serializers
 
 from academics.models import Assignment, AssignmentSubmission, Course, Lesson, Subject
+from users.serializers import TeacherSerializer
 
 
 class SubjectSerializer(serializers.Serializer):
@@ -76,9 +77,7 @@ class CourseSerializer(serializers.Serializer):
     description = serializers.CharField(required=False, allow_blank=True)
     duration_minutes = serializers.IntegerField(min_value=1)
     duration = serializers.CharField(source="duration_formatted", read_only=True)
-    teacher_name = serializers.CharField(
-        source="teacher.user.first_name", read_only=True
-    )
+    teacher = TeacherSerializer(read_only=True)
     lesson_list = LessonSerializer(many=True, read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
     updated_at = serializers.DateTimeField(read_only=True)
@@ -199,72 +198,3 @@ class AssignmentSerializer(serializers.Serializer):
         instance.created_by = validated_data.get("created_by", instance.created_by)
         instance.save()
         return instance
-
-
-# class AssignmentSerializer1(serializers.ModelSerializer):
-#     subject_name = serializers.CharField(source="subject.name", read_only=True)
-#     created_by_name = serializers.CharField(
-#         source="created_by.user.get_first_name", read_only=True
-#     )
-#     submission = serializers.SerializerMethodField(read_only=True)
-
-#     class Meta:
-#         model = Assignment
-#         fields = [
-#             "id",
-#             "title",
-#             "description",
-#             "subject",
-#             "subject_name",
-#             "due_date",
-#             "max_score",
-#             "created_by",
-#             "created_by_name",
-#             "created_at",
-#             "submission",
-#         ]
-#         read_only_fields = ["id", "created_at", "subject_name", "created_by_name"]
-
-#     def get_submission(self, obj):
-#         request = self.context.get("request")
-#         if not request or not request.user.is_authenticated:
-#             return None
-#         if request.user.is_student():
-#             submissions = obj.submissions.filter(student=request.user.student_profile)
-#         else:
-#             submissions = obj.submissions.all()
-
-#         submission_data = AssignmentSubmissionSerializer(submissions, many=True).data
-
-#         return submission_data
-
-#     def validate_max_score(self, value):
-#         if value <= 0:
-#             raise serializers.ValidationError("Maximum score must be positive")
-#         return value
-
-#     def validate_due_date(self, value):
-#         from django.utils import timezone
-
-#         if value < timezone.now():
-#             raise serializers.ValidationError("Due date cannot be in the past")
-#         return value
-
-
-# class AssignmentSubmissionSerializer1(serializers.ModelSerializer):
-#     student_name = serializers.CharField(
-#         source="student.user.get_full_name", read_only=True
-#     )
-
-#     class Meta:
-#         model = AssignmentSubmission
-#         fields = [
-#             "id",
-#             "assignment",
-#             "student_name",
-#             "submission_file",
-#             "created_at",
-#             "score",
-#             "feedback",
-#         ]
-#         read_only_fields = ["id", "created_at"]
