@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from academics.models import Subject
+from EduTrack.utils import get_or_not_found
 from evaluations.models import StudentPerformanceMetrics, StudentResult
 from evaluations.predictions.grade import get_student_predictions_with_explanation
 from evaluations.predictions.subject import get_subject_predictions
@@ -355,38 +356,36 @@ class StudentResultsView(APIView):
         Returns:
             JSON response containing student results grouped by semester
         """
-        try:
-            user = User.objects.get(id=student_id)
-            student = Student.objects.get(user=user)
-            results = StudentResult.objects.filter(student=student).select_related(
-                "subject"
-            )
+        user = get_or_not_found(User.objects.all(), pk=student_id)
+        student = get_or_not_found(Student.objects.all(), user=user)
+        results = StudentResult.objects.filter(student=student).select_related(
+            "subject"
+        )
 
-            formatted_results = {}
+        formatted_results = {
+            semester: {} for semester in range(1, student.semester + 1)
+        }
 
-            for result in results:
-                semester = str(result.semester)
-                if semester not in formatted_results:
-                    formatted_results[semester] = {}
+        all_subjects = Subject.objects.filter(semester__lte=student.semester)
 
-                subject_code = result.subject.code
-                formatted_results[semester][subject_code] = {
-                    "SUBJECT_CODE": subject_code,
-                    "SUBJECT_NAME": result.subject.name.title(),
-                    "CREDIT_HOUR": 3,
-                    "GPA": result.gpa,
-                }
+        result_mapping = {(result.subject.code): result for result in results}
 
-            return Response(
-                {
-                    "message": "Teacher courses retrieved successfully",
-                    "data": formatted_results,
-                    "status": "data_retrieved",
-                },
-                status=status.HTTP_200_OK,
-            )
+        for subject in all_subjects:
+            semester = subject.semester
+            result = result_mapping.get(subject.code)
 
-        except Student.DoesNotExist:
-            return Response(
-                {"error": "Student not found"}, status=status.HTTP_404_NOT_FOUND
-            )
+            formatted_results[semester][subject.code] = {
+                "SUBJECT_CODE": subject.code,
+                "SUBJECT_NAME": subject.name.title(),
+                "CREDIT_HOUR": 3,
+                "GPA": float(result.gpa) if result else 0,
+            }
+
+        return Response(
+            {
+                "message": "Student results retrieved successfully",
+                "data": formatted_results,
+                "status": "data_retrieved",
+            },
+            status=status.HTTP_200_OK,
+        )

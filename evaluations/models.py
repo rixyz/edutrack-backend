@@ -20,12 +20,11 @@ class StudentPerformanceMetrics(models.Model):
 
 
 class StudentResult(models.Model):
-    """Stores final results for a student in a specific subject and semester"""
+    """Stores final results for a student in a specific subject"""
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    semester = models.IntegerField()
     gpa = models.DecimalField(max_digits=5, decimal_places=2)
 
     class Meta:
-        unique_together = ("student", "subject", "semester")
+        unique_together = ("student", "subject")
