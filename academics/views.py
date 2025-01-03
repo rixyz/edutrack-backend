@@ -171,7 +171,9 @@ class AssignmentDetailView(APIView):
         return super().get_permissions()
 
     def get_queryset(self, pk):
-        return get_or_not_found(Assignment.objects.all(), pk=pk)
+        return get_or_not_found(
+            Assignment.objects.all().select_related("subject"), pk=pk
+        )
 
     @swagger_auto_schema(
         tags=["Assignments"],
@@ -189,9 +191,8 @@ class AssignmentDetailView(APIView):
         """
         Retrieve details of a specific assignment.
         """
-        assignments = self.get_queryset(pk)
-
-        serializer = self.serializer_class(assignments, context={"request": request})
+        assignment = self.get_queryset(pk)
+        serializer = self.serializer_class(assignment, context={"request": request})
         return Response(
             {
                 "message": "Assignment details retrieved successfully.",

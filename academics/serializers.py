@@ -71,7 +71,7 @@ class LessonSerializer(serializers.Serializer):
 class CourseSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     subject = serializers.PrimaryKeyRelatedField(queryset=Subject.objects.all())
-    subject_name = serializers.CharField(source="subject.name", read_only=True)
+    subject_data = SubjectSerializer(source="subject", read_only=True)
     type = serializers.CharField(max_length=20)
     title = serializers.CharField(max_length=300)
     description = serializers.CharField(required=False, allow_blank=True)
@@ -110,6 +110,7 @@ class AssignmentSubmissionSerializer(serializers.Serializer):
     student_name = serializers.CharField(
         source="student.user.get_full_name", read_only=True
     )
+    student_id = serializers.CharField(source="student.id", read_only=True)
     submission_file = serializers.FileField(required=False, allow_null=True)
     created_at = serializers.DateTimeField(read_only=True)
     score = serializers.DecimalField(
@@ -151,7 +152,7 @@ class AssignmentSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=200)
     description = serializers.CharField()
     subject = serializers.PrimaryKeyRelatedField(queryset=Subject.objects.all())
-    subject_name = serializers.CharField(source="subject.name", read_only=True)
+    subject_data = SubjectSerializer(source="subject", read_only=True)
     due_date = serializers.DateTimeField()
     max_score = serializers.DecimalField(max_digits=5, decimal_places=2)
     created_by_name = serializers.CharField(
