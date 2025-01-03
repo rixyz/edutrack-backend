@@ -4,6 +4,7 @@ from users.views import (
     RequestPasswordResetView,
     ResetPasswordView,
     StudentAPIView,
+    StudentBySemesterView,
     TeacherAPIView,
     UserAPIView,
     UserInfoView,
@@ -21,6 +22,9 @@ urlpatterns = [
         name="assignment-submission-grade",
     ),
     path("students/", StudentAPIView.as_view(), name="student-list"),
+    path(
+        "students/<int:semester>", StudentBySemesterView.as_view(), name="student-list"
+    ),
     path("teachers/", TeacherAPIView.as_view(), name="teacher-list"),
     path("user/info/", UserInfoView.as_view(), name="user-self-info"),
     path("password_reset/", RequestPasswordResetView.as_view(), name="password_reset"),

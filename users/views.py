@@ -126,6 +126,28 @@ class StudentAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class StudentBySemesterView(APIView):
+    def get_queryset(self, semester):
+        return Student.objects.filter(semester=semester)
+
+    @swagger_auto_schema(
+        tags=["Users"],
+        operation_description="Get all student by semester profiles",
+        responses={200: StudentSerializer(many=True)},
+    )
+    def get(self, request, semester):
+        students = self.get_queryset(semester)
+        serializer = StudentSerializer(students, many=True)
+        return Response(
+            {
+                "message": "Student by semester retrieved successfully",
+                "data": serializer.data,
+                "status": "data_retrieved",
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
 class TeacherAPIView(APIView):
     @swagger_auto_schema(
         tags=["Users"],
